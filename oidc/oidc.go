@@ -521,10 +521,10 @@ type claimSource struct {
 type stringAsBool bool
 
 func (sb *stringAsBool) UnmarshalJSON(b []byte) error {
-	switch string(b) {
-	case "true", `"true"`:
+	switch strings.ToLower(strings.Trim(string(b), `"`)) {
+	case "true":
 		*sb = true
-	case "false", `"false"`:
+	case "false":
 		*sb = false
 	default:
 		return errors.New("invalid value for boolean")
